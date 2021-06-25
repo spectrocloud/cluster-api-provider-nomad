@@ -14,7 +14,6 @@ var (
 	// MachineStateAllocated is the string representing an instance in a ready (commissioned) state
 	//MachineStateAllocated = MachineStatus("Allocated")
 
-
 	// MachineStateRunning is the string representing an instance in a pending state
 	MachineStateRunning = MachineStatus("running")
 

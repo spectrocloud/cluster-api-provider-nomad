@@ -39,6 +39,8 @@ generatorOptions:
 # Create file: nomad-credentials.yaml
 # NOMAD_ENDPOINT=http://1.2.3.4:5240/NOMAD
 # NOMAD_APK_KEY=xxxx:yyyy:zzzz
+# CONSUL_ENDPOINT=http://1.2.3.4:8500
+# CONSUL_API_KEY=xxxx:yyyy:zzzz
 secretGenerator:
 - name: manager-bootstrap-credentials
   envs:
