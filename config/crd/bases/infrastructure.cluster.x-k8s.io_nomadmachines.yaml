@@ -1,0 +1,139 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.1
+  creationTimestamp: null
+  name: nomadmachines.infrastructure.cluster.x-k8s.io
+spec:
+  group: infrastructure.cluster.x-k8s.io
+  names:
+    categories:
+    - cluster-api
+    kind: NomadMachine
+    listKind: NomadMachineList
+    plural: nomadmachines
+    singular: nomadmachine
+  scope: Namespaced
+  versions:
+  - name: v1alpha3
+    schema:
+      openAPIV3Schema:
+        description: NomadMachine is the Schema for the nomadmachines API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NomadMachineSpec defines the desired state of NomadMachine
+            properties:
+              cpu:
+                description: CPU minimum number of CPUs
+                type: integer
+              debugVNC:
+                description: 'DebugVNC specifies whether we want a debugging console, e.g: ":1" (is port 5901)'
+                type: string
+              failureDomain:
+                description: FailureDomain is the failure domain the machine will be created in. Must match a key in the FailureDomains map stored on the cluster object.
+                type: string
+              image:
+                description: Image will be the Nomad image id
+                type: string
+              memoryMB:
+                description: MinMemory minimum memory
+                type: integer
+              providerID:
+                description: ProviderID will be the name in ProviderID format (nomad:///clusterName/machineName)
+                type: string
+            required:
+            - cpu
+            - image
+            type: object
+          status:
+            description: NomadMachineStatus defines the observed state of NomadMachine
+            properties:
+              addresses:
+                description: Addresses contains the associated addresses for the nomad machine.
+                items:
+                  description: MachineAddress contains information for the node's address.
+                  properties:
+                    address:
+                      description: The machine address.
+                      type: string
+                    type:
+                      description: Machine address type, one of Hostname, ExternalIP or InternalIP.
+                      type: string
+                  required:
+                  - address
+                  - type
+                  type: object
+                type: array
+              conditions:
+                description: Conditions defines current service state of the NomadMachine.
+                items:
+                  description: Condition defines an observation of a Cluster API resource operational state.
+                  properties:
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A human readable message indicating details about the transition. This field may be empty.
+                      type: string
+                    reason:
+                      description: The reason for the condition's last transition in CamelCase. The specific API may choose whether or not this field is considered a guaranteed API. This field may not be empty.
+                      type: string
+                    severity:
+                      description: Severity provides an explicit classification of Reason code, so the users or machines can immediately understand the current situation and act accordingly. The Severity field MUST be set only when Status=False.
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, Unknown.
+                      type: string
+                    type:
+                      description: Type of condition in CamelCase or in foo.example.com/CamelCase. Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important.
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              deploymentStatus:
+                description: DeploymentStatus is the state of the AWS instance for this machine.
+                type: string
+              dnsAttached:
+                description: DNSAttached specifies whether the DNS record contains the IP of this machine
+                type: boolean
+              failureMessage:
+                description: FailureMessage will be set in the event that there is a terminal problem reconciling the Machine and will contain a more verbose string suitable for logging and human consumption.
+                type: string
+              failureReason:
+                description: FailureReason will be set in the event that there is a terminal problem reconciling the Machine and will contain a succinct value suitable for machine interpretation.
+                type: string
+              ready:
+                default: false
+                description: Ready denotes that the machine (nomad container) is ready
+                type: boolean
+              statusDescription:
+                description: StatusDescription is the state of the AWS instance for this machine.
+                type: string
+            required:
+            - ready
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

@@ -1,0 +1,13 @@
+domain: cluster.x-k8s.io
+repo: github.com/spectrocloud/cluster-api-provider-nomad
+resources:
+- group: infrastructure
+  kind: NomadCluster
+  version: v1alpha3
+- group: infrastructure
+  kind: NomadMachine
+  version: v1alpha3
+- group: infrastructure
+  kind: NomadMachineTemplate
+  version: v1alpha3
+version: "2"
