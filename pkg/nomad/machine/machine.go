@@ -14,7 +14,7 @@ import (
 
 //goland:noinspection HttpUrlsUsage
 var (
-	RepoURL = "http://imagerepo.sc"
+	RepoURL = "http://sc-pcg.sc"
 )
 
 // Service manages the Nomad machine
