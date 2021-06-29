@@ -14,7 +14,8 @@ import (
 
 //goland:noinspection HttpUrlsUsage
 var (
-	RepoURL = "http://sc-pcg.sc"
+	NetworkScript = "/opt/spectrocloud/files/qemu-ifup"
+	RepoURL       = "http://sc-pcg.sc"
 )
 
 // Service manages the Nomad machine
@@ -92,7 +93,7 @@ func (s *Service) DeployMachine(userData string) (_ *infrav1.Machine, rerr error
 		"-nodefaults",
 		"-machine", "type=q35",
 		"-vga", "std",
-		"-nic", fmt.Sprintf("tap,downscript=no,mac=%v", getMacAddress(m.Name)),
+		"-nic", fmt.Sprintf("tap,script=%s,downscript=no,mac=%v", NetworkScript, getMacAddress(m.Name)),
 		"-drive", "file=fat:rw:/opt/nomad/data/alloc/${NOMAD_ALLOC_ID}/${NOMAD_TASK_NAME}/local/boot,file.label=cidata,format=raw,media=disk",
 	}
 
